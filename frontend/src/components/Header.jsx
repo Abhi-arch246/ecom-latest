@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TbDeviceComputerCamera } from "react-icons/tb";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { CgMenuRightAlt } from "react-icons/cg";
+import { FaCircleUser, FaCartShopping } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 function Header() {
@@ -24,11 +25,17 @@ function Header() {
         </div>
 
         <ul className="hidden md:flex">
-          <Link className="px-4" to="/login">
+          <Link className="flex px-3" to="/login">
+            <span className="px-1">
+              <FaCircleUser className="inline" size={20} />
+            </span>
             Login
           </Link>
-          <Link className="px-4" to="/register">
-            Register
+          <Link className="flex px-3" to="/cart">
+            <span className="px-1">
+              <FaCartShopping className="inline" size={20} />
+            </span>
+            Cart
           </Link>
         </ul>
         <div onClick={handleNav} className="block md:hidden">
@@ -43,11 +50,17 @@ function Header() {
         >
           <ul className="">
             <Link className="block border-b-2 p-2" to="/login">
+              <span className="px-1">
+                <FaCircleUser className="inline" size={20} />
+              </span>
               Login
             </Link>
 
-            <Link className="block border-b-2 p-2" to="/register">
-              Register
+            <Link className="block border-b-2 p-2" to="/cart">
+              <span className="px-1">
+                <FaCartShopping className="inline" size={20} />
+              </span>
+              Cart
             </Link>
           </ul>
         </div>
