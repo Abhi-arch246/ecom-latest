@@ -17,7 +17,7 @@ function Product({ product }) {
           />
 
           {/* <h3 className="p-3">{product.desciption}</h3> */}
-          <h3 className="text-xl font-bold py-2 text-center hover:underline">
+          <h3 className="text-xl font-bold py-2 truncate text-center hover:underline">
             {product.name}
           </h3>
         </Link>

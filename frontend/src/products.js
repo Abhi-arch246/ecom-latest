@@ -16,7 +16,8 @@ const products = [
     name: "Samsung Galaxy S23 Ultra 5G",
     desciption:
       "premium Android smartphone that features a 6.8-inch Dynamic AMOLED 2X display with a 120Hz refresh rate, a Snapdragon 8 Gen 1 processor, up to 12GB of RAM, and up to 1TB of storage. The rear camera system features a 200MP main sensor, a 12MP ultrawide sensor, a 10MP telephoto sensor with 3x optical zoom, and a 10MP telephoto sensor with 10x optical zoom. The front-facing camera is a 40MP sensor.",
-    imageUrl: "https://m.media-amazon.com/images/I/61j99uUfXNL._SX679_.jpg",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfKRn1bQJGCDgmF5P96OO8TNBqLf6ZWklIGA&usqp=CAU",
     brand: "Samsung",
     category: "Electronics",
     price: 124999,
