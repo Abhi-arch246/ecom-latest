@@ -1,9 +1,9 @@
-import products from "../products";
+import { useGetProductsQuery } from "../slices/productsApiSlice";
 import hero_img from "../assets/hero_img.png";
 import Product from "../components/Product";
-import Rating from "react-rating";
 
 function Home() {
+  const { data: products, isLoading, error } = useGetProductsQuery();
   return (
     <>
       <div className="container mx-auto p-6">
@@ -35,11 +35,19 @@ function Home() {
         {/* Products section */}
         <div className="container py-6">
           <h2 className="text-3xl font-bold py-6">Latest Products</h2>
-          <div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-6">
-            {products.map((product) => (
-              <Product product={product} />
-            ))}
-          </div>
+          {isLoading ? (
+            <h1>Loading....</h1>
+          ) : error ? (
+            <h1>{error}</h1>
+          ) : (
+            <>
+              <div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-6">
+                {products.map((product) => (
+                  <Product product={product} />
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>
