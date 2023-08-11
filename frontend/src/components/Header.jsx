@@ -4,9 +4,11 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { CgMenuRightAlt } from "react-icons/cg";
 import { FaCircleUser, FaCartShopping } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Header() {
   const [nav, setNav] = useState(false);
+  const { cartItems } = useSelector((state) => state.cart);
 
   const handleNav = () => {
     setNav(!nav);
@@ -36,6 +38,9 @@ function Header() {
               <FaCartShopping className="inline" size={20} />
             </span>
             Cart
+            <span className="bg-green-500 rounded-lg mx-1 px-2">
+              {cartItems.length}
+            </span>
           </Link>
         </ul>
         <div onClick={handleNav} className="block md:hidden">
@@ -60,7 +65,7 @@ function Header() {
               <span className="px-1">
                 <FaCartShopping className="inline" size={20} />
               </span>
-              Cart
+              Cart {cartItems.length}
             </Link>
           </ul>
         </div>

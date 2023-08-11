@@ -36,7 +36,12 @@ function Home() {
         <div className="container py-6">
           <h2 className="text-3xl font-bold py-6">Latest Products</h2>
           {isLoading ? (
-            <h1>Loading....</h1>
+            <img
+              className="mx-auto"
+              width="450px"
+              src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
+              alt="Loading ..."
+            />
           ) : error ? (
             <h1>{error}</h1>
           ) : (
