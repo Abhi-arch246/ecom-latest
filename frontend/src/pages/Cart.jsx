@@ -1,21 +1,27 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../slices/cartSlice";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   var subtotal = cartItems.reduce(
     (acc, item) => acc + item.price * item.qty,
     0
   );
 
-  const addToCartHandler = async (product, qty) => {
+  const addToCartHandler = (product, qty) => {
     dispatch(addToCart({ ...product, qty }));
   };
 
-  const removeFromCartHandler = async (id) => {
+  const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
+  };
+
+  const checkOutHandler = () => {
+    navigate("/login?redirect=/shipping");
   };
 
   return (
@@ -84,7 +90,10 @@ function Cart() {
               Subtotal : {subtotal} /-
             </h1>
             <div className="text-center mt-8">
-              <button className="bg-slate-500 text-center rounded-md p-3 text-white">
+              <button
+                onClick={checkOutHandler}
+                className="bg-slate-500 text-center rounded-md p-3 text-white"
+              >
                 Proceed to checkout
               </button>
             </div>

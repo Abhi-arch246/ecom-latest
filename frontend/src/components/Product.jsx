@@ -21,10 +21,6 @@ function Product({ product }) {
             {product.name}
           </h3>
         </Link>
-
-        <h3 className="font-bold text-center text-xl">
-          Price : ₹ <span className="text-green-800">{product.price}</span>/-
-        </h3>
         <div className="flex justify-around py-3">
           <h3>Rating : {product.rating}</h3>
           <Rating
@@ -36,14 +32,9 @@ function Product({ product }) {
             emptySymbol={<FaRegStar />}
           />
         </div>
-        <div className="flex justify-center">
-          <button className="bg-slate-600 p-2 rounded-lg text-white">
-            <span className="px-2">
-              <FaCartShopping className="inline" size={20} />
-            </span>
-            Add to cart
-          </button>
-        </div>
+        <h3 className="font-bold text-center text-xl">
+          Price : ₹ <span className="text-green-700">{product.price}</span>/-
+        </h3>
       </div>
     </div>
   );

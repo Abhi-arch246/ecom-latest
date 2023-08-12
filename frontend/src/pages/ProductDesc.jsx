@@ -20,7 +20,6 @@ function ProductDesc() {
 
   const addToCartHandler = async () => {
     dispatch(addToCart({ ...product, qty }));
-    navigate("/cart");
   };
   return (
     <>
