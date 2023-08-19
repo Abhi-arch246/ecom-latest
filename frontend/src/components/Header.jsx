@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 function Header() {
   const [nav, setNav] = useState(false);
   const { cartItems } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.auth);
 
   const handleNav = () => {
     setNav(!nav);
@@ -16,7 +17,7 @@ function Header() {
 
   return (
     <>
-      <div className="flex justify-between bg-slate-600 text-white w-full px-4 h-16 items-center shadow-lg">
+      <div className="flex justify-around bg-slate-600 text-white w-full px-3 h-16 items-center shadow-lg">
         <div className="w-full">
           <Link className="text-xl font-bold" to="/">
             <span>
@@ -26,19 +27,29 @@ function Header() {
           </Link>
         </div>
 
-        <ul className="hidden md:flex">
-          <Link className="flex px-3" to="/login">
-            <span className="px-1">
-              <FaCircleUser className="inline" size={20} />
-            </span>
-            Login
-          </Link>
-          <Link className="flex px-3" to="/cart">
+        <ul className="hidden w-1/5 md:flex">
+          {userInfo ? (
+            <Link className="flex" to="/profile">
+              <span className="px-1">
+                <FaCircleUser className="inline" size={20} />
+              </span>
+              {userInfo.name}
+            </Link>
+          ) : (
+            <Link className="flex" to="/login">
+              <span className="px-1">
+                <FaCircleUser className="inline" size={20} />
+              </span>
+              Login
+            </Link>
+          )}
+
+          <Link className="flex px-2" to="/cart">
             <span className="px-1">
               <FaCartShopping className="inline" size={20} />
             </span>
             Cart
-            <span className="bg-green-500 rounded-lg mx-1 px-2">
+            <span className="bg-blue-500 rounded-lg mx-1 px-2">
               {cartItems.length}
             </span>
           </Link>
@@ -54,12 +65,21 @@ function Header() {
           }
         >
           <ul className="">
-            <Link className="block border-b-2 p-2" to="/login">
-              <span className="px-1">
-                <FaCircleUser className="inline" size={20} />
-              </span>
-              Login
-            </Link>
+            {userInfo ? (
+              <Link className="block border-b-2 p-2" to="/profile">
+                <span className="px-1">
+                  <FaCircleUser className="inline" size={20} />
+                </span>
+                {userInfo.name}
+              </Link>
+            ) : (
+              <Link className="block border-b-2 p-2" to="/login">
+                <span className="px-1">
+                  <FaCircleUser className="inline" size={20} />
+                </span>
+                Login
+              </Link>
+            )}
 
             <Link className="block border-b-2 p-2" to="/cart">
               <span className="px-1">

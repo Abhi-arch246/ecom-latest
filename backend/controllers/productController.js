@@ -1,5 +1,6 @@
 const Product = require("../models/productModel");
 
+//endPoint : '/api/products'
 const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find({});
@@ -9,6 +10,7 @@ const getAllProducts = async (req, res) => {
   }
 };
 
+//endPoint : '/api/products/:id'
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
