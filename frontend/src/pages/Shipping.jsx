@@ -1,26 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { saveShippingAddress } from "../slices/cartSlice";
+import { saveShippingAddress, savePaymentMethod } from "../slices/cartSlice";
 
 function Shipping() {
   const cart = useSelector((state) => state.cart);
-  const { shippingAddress } = cart;
+  const { cartItems, shippingAddress } = cart;
 
   const [address, setAddress] = useState(shippingAddress?.address || "");
   const [city, setCity] = useState(shippingAddress?.city || "");
   const [state, setState] = useState(shippingAddress?.state || "");
-  const [pincode, setPincode] = useState(shippingAddress?.pincode || "");
+  const [postalCode, setPostalCode] = useState(
+    shippingAddress?.postalCode || ""
+  );
   const [country, setCountry] = useState(shippingAddress?.country || "");
   const [logoutApiCall, { isLoading }] = useLogoutMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!cartItems.length > 0) {
+      navigate("/");
+    }
+  }, []);
+
   const shippingHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress({ address, city, state, pincode, country }));
-    navigate("/payment");
+    dispatch(
+      saveShippingAddress({ address, city, state, postalCode, country })
+    );
+    dispatch(savePaymentMethod("Paypal"));
+    navigate("/placeorder");
   };
   return (
     <div className="container pt-8 mx-auto">
@@ -58,9 +69,9 @@ function Shipping() {
             <input
               className="w-full rounded-md p-2 invalid:border-red-400 border border-gray-300"
               type="text"
-              value={pincode}
-              onChange={(e) => setPincode(e.target.value)}
-              placeholder="Enter pincode"
+              value={postalCode}
+              onChange={(e) => setPostalCode(e.target.value)}
+              placeholder="Enter postalCode"
             />
 
             <input

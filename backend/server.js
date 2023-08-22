@@ -6,6 +6,7 @@ const port = process.env.PORT || 5050;
 const cookieParser = require("cookie-parser");
 const productRoutes = require("./routes/productRoute");
 const userRoute = require("./routes/userRoute");
+const orderRoute = require("./routes/orderRoute");
 
 dotenv.config();
 connectDb();
@@ -15,5 +16,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoute);
+app.use("/api/orders", orderRoute);
 
 app.listen(port, () => console.log(`Server runnning on ${port}`));

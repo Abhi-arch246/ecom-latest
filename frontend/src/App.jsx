@@ -7,6 +7,9 @@ import Cart from "./pages/Cart";
 import ProductDesc from "./pages/ProductDesc";
 import Profile from "./pages/Profile";
 import Shipping from "./pages/Shipping";
+import PrivateRoutes from "./components/PrivateRoutes";
+import PlaceOrder from "./pages/PlaceOrder";
+import OrderPage from "./pages/OrderPage";
 
 function App() {
   return (
@@ -18,8 +21,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/shipping" element={<Shipping />} />
+        <Route path="" element={<PrivateRoutes />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/shipping" element={<Shipping />} />
+          <Route path="/placeorder" element={<PlaceOrder />} />
+          <Route path="/order/:id" element={<OrderPage />} />
+        </Route>
       </Routes>
     </Router>
   );
