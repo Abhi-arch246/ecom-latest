@@ -14,7 +14,6 @@ import { useDispatch } from "react-redux";
 function ProductDesc() {
   const { id: productId } = useParams();
   const [qty, setQty] = useState(1);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
 
@@ -96,7 +95,7 @@ function ProductDesc() {
               </h3>
 
               <h2 className="font-bold my-6 text-right text-2xl">
-                Price : ₹{product.price}
+                Price : ${product.price}
               </h2>
               <div className="text-right my-8">
                 <button

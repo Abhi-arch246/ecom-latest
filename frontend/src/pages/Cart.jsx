@@ -55,7 +55,7 @@ function Cart() {
                       </td>
                       <td>{item.name}</td>
                       <td>{item.category}</td>
-                      <td>{item.price} /-</td>
+                      <td>${item.price} /-</td>
                       <td>
                         <select
                           value={item.qty}
@@ -72,7 +72,7 @@ function Cart() {
                           })}
                         </select>
                       </td>
-                      <td>{item.qty * item.price} /-</td>
+                      <td>${item.qty * item.price} /-</td>
                       <td>
                         <button
                           onClick={() => removeFromCartHandler(item._id)}
@@ -87,7 +87,7 @@ function Cart() {
               </tbody>
             </table>
             <h1 className="text-center m-4 font-bold text-xl">
-              Subtotal : {subtotal} /-
+              Subtotal : ${subtotal} /-
             </h1>
             <div className="text-center mt-8">
               <button

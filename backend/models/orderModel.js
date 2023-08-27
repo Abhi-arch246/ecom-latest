@@ -5,6 +5,7 @@ const orderSchema = mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "User",
     },
     orderItems: [
       {
@@ -24,6 +25,7 @@ const orderSchema = mongoose.Schema(
       city: { type: String, required: true },
       postalCode: { type: Number, required: true },
       country: { type: String, required: true },
+      state: { type: String, required: true },
     },
     paymentMethod: {
       type: String,

@@ -29,10 +29,10 @@ function OrderScreen() {
   const placeOrderHandler = async () => {
     try {
       const res = await createOrder({
+        userId: userInfo._id,
         orderItems: cartItems,
         shippingAddress,
         paymentMethod,
-        userId: userInfo._id,
         orderAmount: itemsPrice,
         taxPrice,
         shippingPrice,
@@ -41,7 +41,7 @@ function OrderScreen() {
       dispatch(clearCartItems());
       navigate(`/order/${res._id}`);
     } catch (error) {
-      alert(error.data);
+      console.log(error.data);
     }
   };
   return (
@@ -60,11 +60,11 @@ function OrderScreen() {
           <div className="w-1/2">
             <h1 className="text-2xl font-bold">Order Summary</h1>
             <div className="p-3 float-right">
-              <p className="py-2">Items Price: ₹{itemsPrice} /-</p>
-              <p className="py-2">Shipping Price: ₹{shippingPrice} /-</p>
-              <p className="py-2">Tax Price: ₹{taxPrice} /-</p>
+              <p className="py-2">Items Price: ${itemsPrice} /-</p>
+              <p className="py-2">Shipping Price: ${shippingPrice} /-</p>
+              <p className="py-2">Tax Price: ${taxPrice} /-</p>
               <hr />
-              <h2 className="font-bold py-3">Total price: ₹{totalPrice} /-</h2>
+              <h2 className="font-bold py-3">Total price: ${totalPrice} /-</h2>
             </div>
           </div>
         </div>
@@ -104,9 +104,9 @@ function OrderScreen() {
                       </td>
                       <td>{item.name}</td>
                       <td>{item.category}</td>
-                      <td>₹{item.price} /-</td>
+                      <td>${item.price} /-</td>
                       <td>{item.qty}</td>
-                      <td>₹{item.qty * item.price} /-</td>
+                      <td>${item.qty * item.price} /-</td>
                     </tr>
                   );
                 })}

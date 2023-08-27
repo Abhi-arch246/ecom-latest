@@ -1,6 +1,6 @@
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 
@@ -28,11 +28,13 @@ function Profile() {
   const updateHandler = () => {};
   return (
     <div className="container p-4">
-      <div className="flex justify-between">
-        <h2 className="text-xl font-bold"></h2>
+      <div className="float-right m-6">
+        <Link to="/myorders" className="hover:underline m-6">
+          My Orders
+        </Link>
         <button
           onClick={logoutHandle}
-          className="bg-red-500 float-right p-2 rounded-md text-white"
+          className="bg-red-500 p-2 rounded-md text-white"
         >
           Logout
         </button>
@@ -50,6 +52,7 @@ function Profile() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter name"
+              required
             />
 
             <input
@@ -58,6 +61,7 @@ function Profile() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter email"
+              required
             />
 
             <input
@@ -66,6 +70,7 @@ function Profile() {
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
               placeholder="Enter current password"
+              required
             />
 
             <input
@@ -74,6 +79,7 @@ function Profile() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter new password"
+              required
             />
 
             <input
@@ -82,6 +88,7 @@ function Profile() {
               value={cpassword}
               onChange={(e) => setCpassword(e.target.value)}
               placeholder="Enter confirm new password"
+              required
             />
 
             <button

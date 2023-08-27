@@ -3,6 +3,7 @@ const Order = require("../models/orderModel");
 //endPoint : '/api/orders'
 const addOrder = async (req, res) => {
   const {
+    userId,
     orderItems,
     shippingAddress,
     paymentMethod,
@@ -10,7 +11,6 @@ const addOrder = async (req, res) => {
     taxPrice,
     shippingPrice,
     totalPrice,
-    userId,
   } = req.body;
 
   if (orderItems && orderItems.length === 0) {
@@ -33,14 +33,14 @@ const addOrder = async (req, res) => {
     });
 
     const creatingOrder = await order.save();
-    res.send(creatingOrder);
-    res.end();
+    res.json(creatingOrder);
   }
 };
 
 //endPoint : '/api/orders/myorders'
 const getMyOrders = async (req, res) => {
-  const myOrders = await Order.find({ user: req.user._id });
+  console.log(req.user);
+  const myOrders = await Order.find({ userId: userId._id });
   res.send(myOrders);
 };
 
@@ -57,7 +57,23 @@ const getOrderById = async (req, res) => {
 
 //endPoint : '/api/orders/:id/pay'
 const updateOrderPay = async (req, res) => {
-  res.send("Update pay");
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isPaid = true;
+    order.paidAt = Date.now();
+    order.paymentResult = {
+      id: req.body.id,
+      status: req.body.status,
+      update_time: req.body.update_time,
+      email_address: req.body.payer.email_address,
+    };
+    const updateOrder = await order.save();
+
+    res.send(updateOrder);
+  } else {
+    throw new Error("Order not found");
+  }
 };
 
 //endPoint : '/api/orders/:id/deliver

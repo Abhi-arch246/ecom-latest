@@ -33,7 +33,7 @@ function Product({ product }) {
           />
         </div>
         <h3 className="font-bold text-center text-xl">
-          Price : ₹ <span className="text-green-700">{product.price}</span>/-
+          Price : $<span className="text-green-700">{product.price}</span>/-
         </h3>
       </div>
     </div>

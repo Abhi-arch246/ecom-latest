@@ -17,5 +17,8 @@ app.use(cookieParser());
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoute);
 app.use("/api/orders", orderRoute);
+app.get("/api/paypal/config", (req, res) =>
+  res.send({ clientId: process.env.PAYPAL_CLIENT_ID })
+);
 
 app.listen(port, () => console.log(`Server runnning on ${port}`));
