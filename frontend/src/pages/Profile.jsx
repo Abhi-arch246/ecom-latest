@@ -29,9 +29,6 @@ function Profile() {
   return (
     <div className="container p-4">
       <div className="float-right m-6">
-        <Link to="/myorders" className="hover:underline m-6">
-          My Orders
-        </Link>
         <button
           onClick={logoutHandle}
           className="bg-red-500 p-2 rounded-md text-white"

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { TbDeviceComputerCamera } from "react-icons/tb";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle, AiFillHome } from "react-icons/ai";
 import { CgMenuRightAlt } from "react-icons/cg";
-import { FaCircleUser, FaCartShopping } from "react-icons/fa6";
+import { FaCircleUser, FaCartShopping, FaBoxOpen } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -27,14 +27,28 @@ function Header() {
           </Link>
         </div>
 
-        <ul className="hidden w-1/5 md:flex">
+        <ul className="hidden w-1/2 md:flex md:justify-center">
+          <Link className="flex px-2" to="/">
+            <span className="px-1">
+              <AiFillHome className="inline" size={20} />
+            </span>
+            Home
+          </Link>
           {userInfo ? (
-            <Link className="flex" to="/profile">
-              <span className="px-1">
-                <FaCircleUser className="inline" size={20} />
-              </span>
-              {userInfo.name}
-            </Link>
+            <>
+              <Link className="flex px-2" to="/myorders">
+                <span className="px-1">
+                  <FaBoxOpen className="inline" size={20} />
+                </span>
+                My Orders
+              </Link>
+              <Link className="flex px-2" to="/profile">
+                <span className="px-1">
+                  <FaCircleUser className="inline" size={20} />
+                </span>
+                {userInfo.name}
+              </Link>
+            </>
           ) : (
             <Link className="flex" to="/login">
               <span className="px-1">

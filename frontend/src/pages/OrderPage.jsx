@@ -152,6 +152,27 @@ function OrderPage() {
                   <span className="font-bold">Order time: </span>
                   {moment(order.createdAt).format("LLL")}
                 </p>
+                {order.paymentResult && (
+                  <>
+                    <p className="mb-2">
+                      <span className="font-bold">Paid at: </span>
+                      {moment(order.paidAt).format("LLL")}
+                    </p>
+                    <p className="mb-2">
+                      <span className="font-bold">Transaction Id: </span>
+                      {order.paymentResult.id}
+                    </p>
+                  </>
+                )}
+
+                <h2 className="mb-2">
+                  <span className="font-bold">Payment status: </span>
+                  {order.isPaid ? (
+                    <span className="bg-green-400 p-1 rounded-md">Paid</span>
+                  ) : (
+                    <span className="bg-red-400 p-1 rounded-md">Not Paid</span>
+                  )}
+                </h2>
                 <h2 className="mb-2">
                   <span className="font-bold">Delivery status: </span>
                   {order.isDelivered ? (
@@ -164,22 +185,14 @@ function OrderPage() {
                     </span>
                   )}
                 </h2>
-                <h2 className="mb-2">
-                  <span className="font-bold">Payment status: </span>
-                  {order.isPaid ? (
-                    <span className="bg-green-400 p-1 rounded-md">Paid</span>
-                  ) : (
-                    <span className="bg-red-400 p-1 rounded-md">Not Paid</span>
-                  )}
-                </h2>
               </div>
             </div>
 
             {!order.isPaid && (
               <>
-                {payLoading && <h1>Loading...</h1>}
+                {payLoading && <h1 className="text-center">Loading...</h1>}
                 {isPending ? (
-                  <h1>Loading...</h1>
+                  <h1 className="text-center">Loading...</h1>
                 ) : (
                   <div className="w-1/3 mx-auto my-6">
                     <PayPalButtons

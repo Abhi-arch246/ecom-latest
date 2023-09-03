@@ -39,8 +39,7 @@ const addOrder = async (req, res) => {
 
 //endPoint : '/api/orders/myorders'
 const getMyOrders = async (req, res) => {
-  console.log(req.user);
-  const myOrders = await Order.find({ userId: userId._id });
+  const myOrders = await Order.find({ userId: req.user._id });
   res.send(myOrders);
 };
 
