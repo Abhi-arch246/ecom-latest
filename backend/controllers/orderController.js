@@ -33,13 +33,19 @@ const addOrder = async (req, res) => {
     });
 
     const creatingOrder = await order.save();
-    res.json(creatingOrder);
+    if (creatingOrder) {
+      return res.send({ success: true, creatingOrder });
+    } else {
+      return res.send({ success: false });
+    }
   }
 };
 
 //endPoint : '/api/orders/myorders'
 const getMyOrders = async (req, res) => {
-  const myOrders = await Order.find({ userId: req.user._id });
+  const myOrders = await Order.find({ userId: req.user._id }).sort({
+    createdAt: -1,
+  });
   res.send(myOrders);
 };
 

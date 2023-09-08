@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 const initialState = {
   userInfo: localStorage.getItem("userInfo")
@@ -13,6 +14,7 @@ const authSlice = createSlice({
     setCredentials: (state, action) => {
       state.userInfo = action.payload;
       localStorage.setItem("userInfo", JSON.stringify(action.payload));
+      toast.success("Successfully logged in");
     },
     logout: (state, action) => {
       state.userInfo = null;

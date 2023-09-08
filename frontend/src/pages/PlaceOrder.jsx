@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useCreateOrderMutation } from "../slices/ordersApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
+import toast from "react-hot-toast";
 
 function OrderScreen() {
   const navigate = useNavigate();
@@ -38,10 +39,15 @@ function OrderScreen() {
         shippingPrice,
         totalPrice,
       }).unwrap();
-      dispatch(clearCartItems());
-      navigate(`/order/${res._id}`);
+      if (res.success) {
+        toast.success("Order Successful");
+        dispatch(clearCartItems());
+        navigate(`/order/${res.creatingOrder._id}`);
+      } else {
+        toast.error("Something went wrong");
+      }
     } catch (error) {
-      console.log(error.data);
+      toast.error(error.data);
     }
   };
   return (

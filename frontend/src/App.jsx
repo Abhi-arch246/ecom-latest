@@ -11,6 +11,7 @@ import PrivateRoutes from "./components/PrivateRoutes";
 import PlaceOrder from "./pages/PlaceOrder";
 import OrderPage from "./pages/OrderPage";
 import MyOrders from "./pages/MyOrders";
+import toast, { Toaster } from "react-hot-toast";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/myorders" element={<MyOrders />} />
         </Route>
       </Routes>
+      <Toaster />
     </Router>
   );
 }

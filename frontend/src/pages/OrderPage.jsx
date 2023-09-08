@@ -42,6 +42,7 @@ function OrderPage() {
       }
     }
   }, [order, paypal, paypalDispatch, payLoading, paypalError]);
+
   const createOrder = (data, actions) => {
     return actions.order
       .create({
@@ -57,6 +58,7 @@ function OrderPage() {
         return orderId;
       });
   };
+
   const onApprove = (data, actions) => {
     return actions.order.capture().then(async function (details) {
       try {
@@ -68,6 +70,7 @@ function OrderPage() {
       }
     });
   };
+
   const onError = (err) => {
     console.log(err.data);
   };
@@ -90,42 +93,48 @@ function OrderPage() {
         ) : (
           <div className="py-6 mx-auto">
             <>
-              <table className="m-4 w-auto mx-auto">
-                <thead>
-                  <tr className="border-solid border-b-2">
-                    <th className="text-md p-6">Product Image</th>
-                    <th className="text-md p-6">Product Name</th>
-                    <th className="text-md p-6">Price</th>
-                    <th className="text-md p-6">Quantity</th>
-                    <th className="text-md p-6">Tax</th>
-                    <th className="text-md p-6">Total Price</th>
-                  </tr>
-                </thead>
-                <tbody className="text-center">
-                  {order.orderItems.map((item) => {
-                    return (
-                      <tr key={item._id} className="">
-                        <td>
-                          <img
-                            className="mx-auto pt-4"
-                            src={item.imageUrl}
-                            alt={item.name}
-                            width="75px"
-                          />
-                        </td>
-                        <td>{item.name}</td>
-                        <td>${item.price} /-</td>
-                        <td>{item.qty}</td>
-                        <td>${order.taxPrice}</td>
-                        <td>${order.totalPrice}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+              <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                  <div class="overflow-hidden">
+                    <table className="m-4 w-auto mx-auto">
+                      <thead>
+                        <tr className="border-solid border-b-2">
+                          <th className="text-md p-6">Product Image</th>
+                          <th className="text-md p-6">Product Name</th>
+                          <th className="text-md p-6">Price</th>
+                          <th className="text-md p-6">Quantity</th>
+                          <th className="text-md p-6">Tax</th>
+                          <th className="text-md p-6">Total Price</th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-center">
+                        {order.orderItems.map((item) => {
+                          return (
+                            <tr key={item._id} className="">
+                              <td>
+                                <img
+                                  className="mx-auto pt-4"
+                                  src={item.imageUrl}
+                                  alt={item.name}
+                                  width="75px"
+                                />
+                              </td>
+                              <td>{item.name}</td>
+                              <td>${item.price} /-</td>
+                              <td>{item.qty}</td>
+                              <td>${order.taxPrice}</td>
+                              <td>${order.totalPrice}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </>
-            <div className="flex gap-8">
-              <div className="w-1/2 shadow-lg rounded-lg p-6">
+            <div className="md:flex flex-wrap justify-around m-4">
+              <div className="md:w-1/2 shadow-lg rounded-lg p-6">
                 <h2 className="text-2xl text-center font-bold mt-8">
                   Shipping Details
                 </h2>
@@ -144,7 +153,7 @@ function OrderPage() {
                   - {order.shippingAddress.postalCode}
                 </p>
               </div>
-              <div className="w-1/2 rounded-lg shadow-lg p-6">
+              <div className="md:w-1/2 rounded-lg shadow-lg p-6">
                 <h2 className="text-2xl text-center font-bold mt-8">
                   Order Details
                 </h2>
@@ -194,7 +203,7 @@ function OrderPage() {
                 {isPending ? (
                   <h1 className="text-center">Loading...</h1>
                 ) : (
-                  <div className="w-1/3 mx-auto my-6">
+                  <div className="w-1/2 md:w-1/3 mx-auto my-12">
                     <PayPalButtons
                       createOrder={createOrder}
                       onApprove={onApprove}

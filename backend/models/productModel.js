@@ -5,7 +5,7 @@ const reviewSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User ",
+      ref: "User",
     },
     name: {
       type: String,
@@ -29,7 +29,6 @@ const productSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "User ",
     },
     name: {
@@ -39,7 +38,6 @@ const productSchema = mongoose.Schema(
     image: {
       type: String,
       required: true,
-      unique: true,
     },
     brand: {
       type: String,

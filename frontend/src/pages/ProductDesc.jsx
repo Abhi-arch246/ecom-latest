@@ -1,5 +1,8 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { useGetProductByIdQuery } from "../slices/productsApiSlice";
+import {
+  useGetProductByIdQuery,
+  useCreateReviewMutation,
+} from "../slices/productsApiSlice";
 import {
   FaCartShopping,
   FaStar,
@@ -9,17 +12,47 @@ import {
 import Rating from "react-rating";
 import { useState } from "react";
 import { addToCart } from "../slices/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-hot-toast";
+import moment from "moment";
 
 function ProductDesc() {
   const { id: productId } = useParams();
   const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
   const dispatch = useDispatch();
-  const { data: product, isLoading, error } = useGetProductByIdQuery(productId);
+  const {
+    data: product,
+    refetch,
+    isLoading,
+    error,
+  } = useGetProductByIdQuery(productId);
+  const [createReview, { isLoading: reviewLoading }] =
+    useCreateReviewMutation(productId);
 
+  const { userInfo } = useSelector((state) => state.auth);
   const addToCartHandler = async () => {
     dispatch(addToCart({ ...product, qty }));
   };
+
+  const reviewHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await createReview({
+        productId,
+        rating,
+        comment,
+      }).unwrap();
+      refetch();
+      toast.success("Review submitted");
+      setComment("");
+      setRating(0);
+    } catch (error) {
+      toast.error(error.data);
+    }
+  };
+
   return (
     <>
       <div className="pt-14 pl-14">
@@ -110,6 +143,83 @@ function ProductDesc() {
                   Add to cart
                 </button>
               </div>
+            </div>
+          </div>
+          <div className="container p-3 flex justify-around">
+            <div className="add">
+              <h2 className="text-2xl font-bold">Write customer review</h2>
+              {reviewLoading && (
+                <img
+                  className="mx-auto"
+                  width="450px"
+                  src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
+                  alt="Loading ..."
+                />
+              )}
+
+              {userInfo ? (
+                <form className="my-6">
+                  <p>Select the rating for product </p>
+                  <Rating
+                    initialRating={rating}
+                    onChange={(value) => setRating(value)}
+                    style={{ color: "orange" }}
+                    fractions={2}
+                    fullSymbol={<FaStar />}
+                    emptySymbol={<FaRegStar />}
+                  />
+                  <textarea
+                    className="block mt-4 border-2"
+                    name="comment"
+                    placeholder="Enter review here"
+                    onChange={(e) => setComment(e.target.value)}
+                    cols="30"
+                    rows="5"
+                  >
+                    {comment}
+                  </textarea>
+                  <button
+                    className="bg-slate-500 my-4 rounded-md p-2 text-white"
+                    onClick={reviewHandler}
+                  >
+                    Submit
+                  </button>
+                </form>
+              ) : (
+                <>
+                  <Link
+                    className="block my-8 p-3 rounded-md underline bg-red-200"
+                    to="/login"
+                  >
+                    Click here to login to write a review
+                  </Link>
+                </>
+              )}
+            </div>
+            <div className="view">
+              <h2 className="text-2xl font-bold">Reviews</h2>
+              {product.reviews.length === 0 && (
+                <p className="my-8 bg-red-200 p-3 rounded-md">
+                  No reviews for this product
+                </p>
+              )}
+              {product.reviews.map((review) => {
+                return (
+                  <div key={review._id}>
+                    <p>{review.name}</p>
+                    <Rating
+                      style={{ color: "orange" }}
+                      initialRating={review.rating}
+                      readonly
+                      fractions={2}
+                      fullSymbol={<FaStar />}
+                      emptySymbol={<FaRegStar />}
+                    />
+                    <p>{review.comment}</p>
+                    <p>{moment(review.createdAt).format("LLL")}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </>

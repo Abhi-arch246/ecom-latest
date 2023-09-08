@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useLoginMutation } from "../slices/usersApiSlice";
 import { setCredentials } from "../slices/authSlice";
+import toast from "react-hot-toast";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -29,7 +30,7 @@ function Login() {
       dispatch(setCredentials({ ...res }));
       navigate(redirect);
     } catch (error) {
-      alert(error.data);
+      toast.error(error.data);
     }
   };
 
@@ -42,14 +43,6 @@ function Login() {
               <h2 className="text-2xl font-bold text-white mb-4">
                 Login to your account
               </h2>
-              {isLoading && (
-                <img
-                  className="mx-auto"
-                  width="450px"
-                  src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
-                  alt="Loading ..."
-                />
-              )}
               <input
                 className="w-full rounded-md p-2 invalid:border-red-400 border border-gray-300"
                 type="email"

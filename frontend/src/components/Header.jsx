@@ -74,20 +74,34 @@ function Header() {
         <div
           className={
             nav
-              ? "fixed left-0 top-12 z-10 bg-slate-600 border-b-2 text-white w-full h-32 p-4 shadow-lg ease-in-out"
+              ? "fixed left-0 top-12 z-10 bg-slate-600 border-b-2 text-white w-full h-56 p-4 shadow-lg ease-in-out"
               : "hidden"
           }
         >
           <ul className="">
+            <Link className="flex py-3" to="/">
+              <span className="px-1">
+                <AiFillHome className="inline" size={20} />
+              </span>
+              Home
+            </Link>
             {userInfo ? (
-              <Link className="block border-b-2 p-2" to="/profile">
-                <span className="px-1">
-                  <FaCircleUser className="inline" size={20} />
-                </span>
-                {userInfo.name}
-              </Link>
+              <>
+                <Link className="flex py-3" to="/myorders">
+                  <span className="px-1">
+                    <FaBoxOpen className="inline" size={20} />
+                  </span>
+                  My Orders
+                </Link>
+                <Link className="block py-3" to="/profile">
+                  <span className="px-1">
+                    <FaCircleUser className="inline" size={20} />
+                  </span>
+                  {userInfo.name}
+                </Link>
+              </>
             ) : (
-              <Link className="block border-b-2 p-2" to="/login">
+              <Link className="block py-3" to="/login">
                 <span className="px-1">
                   <FaCircleUser className="inline" size={20} />
                 </span>
@@ -95,7 +109,7 @@ function Header() {
               </Link>
             )}
 
-            <Link className="block border-b-2 p-2" to="/cart">
+            <Link className="block py-3" to="/cart">
               <span className="px-1">
                 <FaCartShopping className="inline" size={20} />
               </span>
