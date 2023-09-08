@@ -8,7 +8,12 @@ export default defineConfig({
     host: true,
     port: 3000,
     build: {
-      outDir: "../dist",
+      outDir: path.resolve(__dirname, "dist"),
+      rollupOptions: {
+        input: {
+          index: path.resolve(__dirname, "src/index.html"),
+        },
+      },
     },
     proxy: {
       "/api": {
