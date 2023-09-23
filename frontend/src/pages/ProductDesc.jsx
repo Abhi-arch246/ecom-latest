@@ -55,7 +55,7 @@ function ProductDesc() {
 
   return (
     <>
-      <div className="pt-14 pl-14">
+      <div className="pt-7 pl-5">
         <Link className="bg-slate-600 p-2 rounded-md text-white" to="/">
           <span className="px-2">
             <FaCircleChevronLeft className="inline" />
@@ -83,7 +83,7 @@ function ProductDesc() {
                 className="desc-style rounded-md mx-auto"
                 src={product.imageUrl}
                 width="150"
-                height="50"
+                height="40"
                 alt={product.name}
               />
             </div>
@@ -145,8 +145,33 @@ function ProductDesc() {
               </div>
             </div>
           </div>
-          <div className="container p-3 flex justify-around">
-            <div className="add">
+          <div className="container p-3 md:flex justify-around">
+            <div className="flex-col">
+              <h2 className="text-2xl font-bold">Reviews</h2>
+              {product.reviews.length === 0 && (
+                <p className="my-8 bg-red-200 p-3 rounded-md">
+                  No reviews for this product
+                </p>
+              )}
+              {product.reviews.map((review) => {
+                return (
+                  <div key={review._id}>
+                    <p>{review.name}</p>
+                    <Rating
+                      style={{ color: "orange" }}
+                      initialRating={review.rating}
+                      readonly
+                      fractions={2}
+                      fullSymbol={<FaStar />}
+                      emptySymbol={<FaRegStar />}
+                    />
+                    <p>{review.comment}</p>
+                    <p>{moment(review.createdAt).format("LLL")}</p>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex-col">
               <h2 className="text-2xl font-bold">Write customer review</h2>
               {reviewLoading && (
                 <img
@@ -195,31 +220,6 @@ function ProductDesc() {
                   </Link>
                 </>
               )}
-            </div>
-            <div className="view">
-              <h2 className="text-2xl font-bold">Reviews</h2>
-              {product.reviews.length === 0 && (
-                <p className="my-8 bg-red-200 p-3 rounded-md">
-                  No reviews for this product
-                </p>
-              )}
-              {product.reviews.map((review) => {
-                return (
-                  <div key={review._id}>
-                    <p>{review.name}</p>
-                    <Rating
-                      style={{ color: "orange" }}
-                      initialRating={review.rating}
-                      readonly
-                      fractions={2}
-                      fullSymbol={<FaStar />}
-                      emptySymbol={<FaRegStar />}
-                    />
-                    <p>{review.comment}</p>
-                    <p>{moment(review.createdAt).format("LLL")}</p>
-                  </div>
-                );
-              })}
             </div>
           </div>
         </>
