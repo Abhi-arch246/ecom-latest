@@ -5,6 +5,7 @@ import { CgMenuRightAlt } from "react-icons/cg";
 import { FaCircleUser, FaCartShopping, FaBoxOpen } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import shopImg from "../assets/shop.png";
 
 function Header() {
   const [nav, setNav] = useState(false);
@@ -21,9 +22,10 @@ function Header() {
         <div className="w-full">
           <Link className="text-xl font-bold" to="/">
             <span>
-              <TbDeviceComputerCamera className="inline" size={27} />
+              <img className="inline p-1" src={shopImg} width="45px" alt="" />
+              {/* <TbDeviceComputerCamera className="inline" size={27} /> */}
             </span>
-            MERN Ecom
+            MyEcom
           </Link>
         </div>
 
