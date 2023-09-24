@@ -80,10 +80,8 @@ function ProductDesc() {
                 {product.name}
               </h1>
               <img
-                className="desc-style rounded-md mx-auto"
+                className="mobile-style md:desc-style rounded-md mx-auto"
                 src={product.imageUrl}
-                width="150"
-                height="40"
                 alt={product.name}
               />
             </div>
