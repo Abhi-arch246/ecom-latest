@@ -38,18 +38,22 @@ function ProductDesc() {
 
   const reviewHandler = async (e) => {
     e.preventDefault();
-    try {
-      await createReview({
-        productId,
-        rating,
-        comment,
-      }).unwrap();
-      refetch();
-      toast.success("Review submitted");
-      setComment("");
-      setRating(0);
-    } catch (error) {
-      toast.error(error.data);
+    if (comment === "") {
+      toast.error("Oops that's not right");
+    } else {
+      try {
+        await createReview({
+          productId,
+          rating,
+          comment,
+        }).unwrap();
+        refetch();
+        toast.success("Review submitted");
+        setComment("");
+        setRating(0);
+      } catch (error) {
+        toast.error(error.data);
+      }
     }
   };
 
