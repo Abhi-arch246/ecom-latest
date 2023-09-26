@@ -127,10 +127,17 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+//endPoint : '/api/users/allusers'
+const getAllUsers = async (req, res) => {
+  const allUsers = await User.find({}).sort({ createdAt: -1 });
+  res.send(allUsers);
+};
+
 module.exports = {
   loginUser,
   registerUser,
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  getAllUsers,
 };

@@ -27,8 +27,11 @@ function Profile() {
 
   const updateHandler = () => {};
   return (
-    <div className="container p-4">
-      <div className="float-right m-6">
+    <div className="container mx-auto flex-col justify-center p-4">
+      <div className="text-center">
+        <Link className="p-3 mx-2 rounded-md bg-slate-400" to="/admin">
+          Switch to Admin
+        </Link>
         <button
           onClick={logoutHandle}
           className="bg-red-500 p-2 rounded-md text-white"
@@ -36,7 +39,7 @@ function Profile() {
           Logout
         </button>
       </div>
-      <form>
+      <form className="mx-auto">
         <div className="bg-slate-600 rounded-3xl max-w-md p-12">
           <div className="space-y-6">
             <h2 className="text-2xl font-bold text-white mb-4">

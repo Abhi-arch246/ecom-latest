@@ -1,8 +1,10 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 import {
   useGetOrderByIdQuery,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
+  useDeliverOrderMutation,
 } from "../slices/ordersApiSlice";
 import moment from "moment";
 import { useSelector } from "react-redux";
@@ -25,6 +27,8 @@ function OrderPage() {
     isLoading: paypalLoading,
     error: paypalError,
   } = useGetPaypalClientIdQuery();
+  const [deliverOrder, { isLoading: deliverLoading }] =
+    useDeliverOrderMutation();
   //   console.log(order);
   useEffect(() => {
     if (!paypalError && !paypalLoading && paypal.clientId) {
@@ -71,6 +75,16 @@ function OrderPage() {
     });
   };
 
+  const deliverHandler = async () => {
+    try {
+      await deliverOrder(orderId);
+      refetch();
+      toast.success("Order Delivered!");
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   const onError = (err) => {
     console.log(err.data);
   };
@@ -93,9 +107,9 @@ function OrderPage() {
         ) : (
           <div className="py-6 mx-auto">
             <>
-              <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
-                  <div class="overflow-hidden">
+              <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                  <div className="overflow-hidden">
                     <table className="m-4 w-auto mx-auto">
                       <thead>
                         <tr className="border-solid border-b-2">
@@ -215,6 +229,28 @@ function OrderPage() {
             )}
           </div>
         )}
+        {deliverLoading && (
+          <img
+            className="mx-auto"
+            width="450px"
+            src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
+            alt="Loading ..."
+          />
+        )}
+        {userInfo &&
+          userInfo.isAdmin &&
+          order?.isPaid &&
+          !order?.isDelivered && (
+            <div className="text-center pb-6">
+              <button
+                type="button"
+                className=" p-2 bg-slate-400 rounded-md"
+                onClick={deliverHandler}
+              >
+                Mark As Delivered
+              </button>
+            </div>
+          )}
       </div>
     </div>
   );

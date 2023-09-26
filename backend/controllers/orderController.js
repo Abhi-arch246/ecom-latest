@@ -83,7 +83,24 @@ const updateOrderPay = async (req, res) => {
 
 //endPoint : '/api/orders/:id/deliver
 const updateOrderDeliver = async (req, res) => {
-  res.send("Update Deliver");
+  const order = await Order.findById(req.params.id);
+
+  if (order) {
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
+
+    const updatedOrder = await order.save();
+    res.status(200).json(updatedOrder);
+  } else {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+};
+
+//endPoint : '/api/orders/'
+const getAllOrders = async (req, res) => {
+  const allOrders = await Order.find({}).sort({ createdAt: -1 });
+  res.send(allOrders);
 };
 
 module.exports = {
@@ -92,4 +109,5 @@ module.exports = {
   getOrderById,
   updateOrderPay,
   updateOrderDeliver,
+  getAllOrders,
 };

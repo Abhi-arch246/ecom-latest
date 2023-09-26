@@ -8,19 +8,20 @@ function MyOrders() {
     <div className="container mx-auto">
       <div className="flex flex-col">
         <h1 className="text-3xl py-4 font-bold text-center">My Orders</h1>
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-14">
+          <div class="inline-block min-w-full py-2 sm:px-6 lg:px-2">
             <div class="overflow-hidden">
-              <table class="min-w-full m-4 text-left text-sm font-light">
+              <table class="min-w-full m-2 text-left text-sm font-light">
                 <thead className="border-b bg-slate-500 font-medium ">
                   <tr>
-                    <th className="text-md p-5">Order Id</th>
-                    <th className="text-md p-5">No. of Products</th>
-                    <th className="text-md p-5">Total Price</th>
-                    <th className="text-md p-5">Payment Method</th>
-                    <th className="text-md p-5">Payment Status</th>
-                    <th className="text-md p-5">Delivery Status</th>
-                    <th className="text-md p-5">Date ordered</th>
+                    <th className="text-md p-4">Order Id</th>
+                    <th className="text-md p-4">No. of Products</th>
+                    <th className="text-md p-4">Total Price</th>
+                    <th className="text-md p-4">Payment Method</th>
+                    <th className="text-md p-4">Payment Status</th>
+                    <th className="text-md p-4">Delivery Status</th>
+                    <th className="text-md p-4">Date ordered</th>
+                    <th className="text-md p-4">Date Delivered</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -73,10 +74,20 @@ function MyOrders() {
                             </p>
                           </td>
                         )}
-
                         <td className="px-4">
                           {moment(item.createdAt).format("LLL")}
                         </td>
+                        {item.isDelivered ? (
+                          <td>
+                            <p className=" inline p-2 rounded-md">
+                              {moment(item.deliveredAt).format("LLL")}
+                            </p>
+                          </td>
+                        ) : (
+                          <td>
+                            <p className="inline md:p-2 p-1 rounded-md">--</p>
+                          </td>
+                        )}
                       </tr>
                     );
                   })}
