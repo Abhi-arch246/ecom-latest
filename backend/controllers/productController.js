@@ -54,8 +54,30 @@ const addProductReview = async (req, res) => {
   }
 };
 
+//endPoint : '/api/products/
+const addProduct = async (req, res) => {
+  try {
+    const { name, description, imageUrl, brand, category, price, stock } =
+      req.body;
+    const product = await Product.create({
+      name,
+      description,
+      imageUrl,
+      brand,
+      category,
+      price,
+      stock,
+    });
+    if (product) return res.status(200).json({ msg: "Product added!" });
+    else console.log("Failure");
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
   addProductReview,
+  addProduct,
 };

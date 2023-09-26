@@ -10,7 +10,7 @@ function AdminPage() {
       <h1 className="text-2xl text-center font-bold mt-5">
         Welcome to Admin Home Page
       </h1>
-      <div className="md:flex justify-between gap-5 mt-16">
+      <div className="md:flex justify-between gap-5 my-16">
         <div className=" mx-auto border-2 px-20 pb-8 rounded-lg">
           <Link to="/admin/products">
             <h2 className="text-xl text-center py-8 font-bold">Products</h2>
