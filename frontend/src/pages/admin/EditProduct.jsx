@@ -1,10 +1,14 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { FaCircleChevronLeft } from "react-icons/fa6";
-import { useCreateProductMutation } from "../../slices/productsApiSlice";
+import {
+  useGetProductByIdQuery,
+  useUpdateProductMutation,
+} from "../../slices/productsApiSlice";
 import toast from "react-hot-toast";
 
-function AddProduct() {
+function EditProduct() {
+  const { id: productId } = useParams();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -12,23 +16,43 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [countInStock, setCountInStock] = useState("");
+  const {
+    data: product,
+    refetch,
+    isLoading,
+    error,
+  } = useGetProductByIdQuery(productId);
+
+  const [updateProduct, { isLoading: loadingUpdate }] =
+    useUpdateProductMutation();
+  useEffect(() => {
+    if (product) {
+      setName(product.name);
+      setDescription(product.description);
+      setImageUrl(product.imageUrl);
+      setBrand(product.brand);
+      setCategory(product.category);
+      setPrice(product.price);
+      setCountInStock(product.countInStock);
+    }
+  }, [product]);
+
   const navigate = useNavigate();
 
-  const [createProduct, { isLoading }] = useCreateProductMutation();
-
-  const addProductHandler = async (e) => {
+  const updateProductHandler = async (e) => {
     e.preventDefault();
-
+    const updatedProduct = {
+      productId,
+      name,
+      description,
+      imageUrl,
+      brand,
+      category,
+      price,
+      countInStock,
+    };
     try {
-      const res = await createProduct({
-        name,
-        description,
-        imageUrl,
-        brand,
-        category,
-        price,
-        countInStock,
-      });
+      const res = await updateProduct(updatedProduct);
       if (res) {
         toast.success(res.data.msg);
         navigate("/admin/products");
@@ -55,7 +79,7 @@ function AddProduct() {
       </div>
       <div className="container mx-auto mt-12">
         <h1 className="text-2xl text-center font-bold pb-8">
-          Add Product to the inventory
+          Update Product of the inventory
         </h1>
         {isLoading && (
           <img
@@ -145,9 +169,9 @@ function AddProduct() {
             <button
               type="submit"
               className="p-2 bg-slate-400 rounded-md"
-              onClick={addProductHandler}
+              onClick={updateProductHandler}
             >
-              Add Product
+              Update Product
             </button>
           </div>
         </form>
@@ -156,4 +180,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default EditProduct;

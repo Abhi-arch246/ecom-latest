@@ -18,6 +18,7 @@ import OrderList from "./pages/admin/OrderList";
 import ProductList from "./pages/admin/ProductList";
 import UserList from "./pages/admin/UserList";
 import AddProduct from "./pages/admin/AddProduct";
+import EditProduct from "./pages/admin/EditProduct";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/admin/orders" element={<OrderList />} />
           <Route path="/admin/users" element={<UserList />} />
           <Route path="/admin/addproduct" element={<AddProduct />} />
+          <Route path="/admin/product/:id/edit" element={<EditProduct />} />
         </Route>
       </Routes>
       <Toaster />

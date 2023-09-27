@@ -57,8 +57,15 @@ const addProductReview = async (req, res) => {
 //endPoint : '/api/products/
 const addProduct = async (req, res) => {
   try {
-    const { name, description, imageUrl, brand, category, price, stock } =
-      req.body;
+    const {
+      name,
+      description,
+      imageUrl,
+      brand,
+      category,
+      price,
+      countInStock,
+    } = req.body;
     const product = await Product.create({
       name,
       description,
@@ -66,12 +73,48 @@ const addProduct = async (req, res) => {
       brand,
       category,
       price,
-      stock,
+      countInStock,
     });
     if (product) return res.status(200).json({ msg: "Product added!" });
-    else console.log("Failure");
+    else return res.status(200).json({ msg: "Something went wrong!" });
   } catch (error) {
     return res.status(400).send(error);
+  }
+};
+
+//endPoint : '/api/products/:id'
+const updateProduct = async (req, res) => {
+  const { name, description, imageUrl, brand, category, price, countInStock } =
+    req.body;
+
+  const product = await Product.findById(req.params.id);
+  if (product) {
+    (product.name = name),
+      (product.description = description),
+      (product.imageUrl = imageUrl),
+      (product.brand = brand),
+      (product.category = category),
+      (product.price = price),
+      (product.countInStock = countInStock);
+  }
+
+  const updateProduct = await product.save();
+  if (updateProduct) {
+    return res.status(200).json({ msg: "Product Updated!" });
+  } else {
+    return res.status(200).json({ msg: "Something went wrong!" });
+  }
+};
+
+//endPoint : '/api/products/:id'
+const deleteProduct = async (req, res) => {
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    await Product.deleteOne({ _id: req.params.id });
+    return res.status(200).json({ msg: "Product deleted!" });
+  } else {
+    return res.status(200).json({ msg: "Something went wrong!" });
   }
 };
 
@@ -80,4 +123,6 @@ module.exports = {
   getProductById,
   addProductReview,
   addProduct,
+  updateProduct,
+  deleteProduct,
 };

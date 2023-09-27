@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
-import { useGetProductsQuery } from "../../slices/productsApiSlice";
+import {
+  useGetProductsQuery,
+  useDeleteProductMutation,
+} from "../../slices/productsApiSlice";
 import { FaCircleChevronLeft } from "react-icons/fa6";
 import { FiEdit } from "react-icons/fi";
 import { BiCartAdd } from "react-icons/bi";
@@ -7,10 +10,20 @@ import { MdDeleteOutline } from "react-icons/md";
 import toast from "react-hot-toast";
 
 function ProductList() {
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
 
-  const deleteHandler = (id) => {
-    toast.success(`Product ${id} deleted`);
+  const deleteHandler = async (id) => {
+    if (window.confirm("Are you sure to delete?")) {
+      try {
+        await deleteProduct(id);
+        refetch();
+        toast.success(`Product deleted`);
+      } catch (error) {
+        toast.error("Something went wrong");
+      }
+    }
   };
   return (
     <>
@@ -57,6 +70,13 @@ function ProductList() {
                   </thead>
                   <tbody>
                     {isLoading && (
+                      <img
+                        width="450px"
+                        src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
+                        alt="Loading ..."
+                      />
+                    )}
+                    {loadingDelete && (
                       <img
                         width="450px"
                         src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
