@@ -68,68 +68,72 @@ function ProductList() {
                       <th className="text-md p-3">Delete</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {isLoading && (
+                  {isLoading ? (
+                    <div className="w-screen mx-auto">
                       <img
-                        width="450px"
+                        className="mx-auto"
                         src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
                         alt="Loading ..."
                       />
-                    )}
-                    {loadingDelete && (
-                      <img
-                        width="450px"
-                        src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
-                        alt="Loading ..."
-                      />
-                    )}
-                    {products?.map((item) => {
-                      return (
-                        <tr
-                          className="border-b text-center bg-neutral-100"
-                          key={item._id}
-                        >
-                          <Link
-                            className="hover:underline"
-                            to={`/product/${item._id}`}
+                    </div>
+                  ) : (
+                    <tbody>
+                      {products?.map((item) => {
+                        return (
+                          <tr
+                            className="border-b text-center bg-neutral-100"
+                            key={item._id}
                           >
-                            <td className="py-6 font-bold">{item._id}</td>
-                          </Link>
-
-                          <td>
-                            <img
-                              className="mx-auto"
-                              src={item.imageUrl}
-                              alt={item.name}
-                              width="55px"
-                            />
-                          </td>
-                          <td>{item.name}</td>
-                          <td>{item.countInStock}</td>
-                          <td>{item.brand}</td>
-                          <td>{item.category}</td>
-                          <td>${item.price}</td>
-                          <td>{item.rating}</td>
-                          <td>{item.reviews.length}</td>
-                          <td>
-                            <Link to={`/admin/product/${item._id}/edit`}>
-                              <FiEdit
-                                className="inline hover:cursor-pointer"
-                                size={20}
-                              />
+                            <Link
+                              className="hover:underline"
+                              to={`/product/${item._id}`}
+                            >
+                              <td className="py-6 font-bold">{item._id}</td>
                             </Link>
-                          </td>
-                          <td>
-                            <MdDeleteOutline
-                              onClick={() => deleteHandler(item._id)}
-                              className="inline hover:cursor-pointer"
-                              size={25}
-                            />
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
+
+                            <td>
+                              <img
+                                className="mx-auto"
+                                src={item.imageUrl}
+                                alt={item.name}
+                                width="55px"
+                              />
+                            </td>
+                            <td>{item.name}</td>
+                            <td>{item.countInStock}</td>
+                            <td>{item.brand}</td>
+                            <td>{item.category}</td>
+                            <td>${item.price}</td>
+                            <td>{item.rating}</td>
+                            <td>{item.reviews.length}</td>
+                            <td>
+                              <Link to={`/admin/product/${item._id}/edit`}>
+                                <FiEdit
+                                  className="inline hover:cursor-pointer"
+                                  size={20}
+                                />
+                              </Link>
+                            </td>
+                            <td>
+                              <MdDeleteOutline
+                                onClick={() => deleteHandler(item._id)}
+                                className="inline hover:cursor-pointer"
+                                size={25}
+                              />
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  )}
+
+                  {loadingDelete && (
+                    <img
+                      width="450px"
+                      src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
+                      alt="Loading ..."
+                    />
+                  )}
                 </table>
               </div>
             </div>

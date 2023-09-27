@@ -98,9 +98,9 @@ const updateProduct = async (req, res) => {
       (product.countInStock = countInStock);
   }
 
-  const updateProduct = await product.save();
-  if (updateProduct) {
-    return res.status(200).json({ msg: "Product Updated!" });
+  const updatedProduct = await product.save();
+  if (updatedProduct) {
+    return res.status(200).json({ updatedProduct, msg: "Product updated" });
   } else {
     return res.status(200).json({ msg: "Something went wrong!" });
   }
