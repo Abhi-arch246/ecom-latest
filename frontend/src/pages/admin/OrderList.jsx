@@ -34,76 +34,81 @@ function OrderList() {
                       <th className="text-md p-4">Date Delivered</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {isLoading && (
+
+                  {isLoading ? (
+                    <div className="w-screen mx-auto">
                       <img
-                        className="text-center"
-                        width="450px"
+                        className="mx-auto"
                         src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
                         alt="Loading ..."
                       />
-                    )}
-                    {allorders?.map((item) => {
-                      return (
-                        <tr
-                          className="border-b text-center bg-neutral-100"
-                          key={item._id}
-                        >
-                          <Link
-                            className="hover:underline"
-                            to={`/order/${item._id}`}
+                    </div>
+                  ) : (
+                    <tbody>
+                      {allorders?.map((item) => {
+                        return (
+                          <tr
+                            className="border-b text-center bg-neutral-100"
+                            key={item._id}
                           >
-                            <td className="py-6 font-bold">{item._id}</td>
-                          </Link>
+                            <Link
+                              className="hover:underline"
+                              to={`/order/${item._id}`}
+                            >
+                              <td className="py-6 font-bold">{item._id}</td>
+                            </Link>
 
-                          <td>{item.orderItems.length}</td>
-                          <td>${item.totalPrice}</td>
-                          <td>{item.paymentMethod}</td>
-                          {item.isPaid ? (
-                            <td>
-                              <p className="bg-green-500 inline p-2 rounded-md">
-                                Paid
-                              </p>
-                            </td>
-                          ) : (
-                            <td>
-                              <p className="bg-red-500 text-white inline md:p-2 p-1 rounded-md">
-                                Not Paid
-                              </p>
-                            </td>
-                          )}
-                          {item.isDelivered ? (
-                            <td>
-                              <p className="bg-green-500 inline p-2 rounded-md">
-                                Delivered
-                              </p>
-                            </td>
-                          ) : (
-                            <td>
-                              <p className="bg-red-500 text-white inline md:p-2 p-1 rounded-md">
-                                Not Delivered
-                              </p>
-                            </td>
-                          )}
+                            <td>{item.orderItems.length}</td>
+                            <td>${item.totalPrice}</td>
+                            <td>{item.paymentMethod}</td>
+                            {item.isPaid ? (
+                              <td>
+                                <p className="bg-green-500 inline p-2 rounded-md">
+                                  Paid
+                                </p>
+                              </td>
+                            ) : (
+                              <td>
+                                <p className="bg-red-500 text-white inline md:p-2 p-1 rounded-md">
+                                  Not Paid
+                                </p>
+                              </td>
+                            )}
+                            {item.isDelivered ? (
+                              <td>
+                                <p className="bg-green-500 inline p-2 rounded-md">
+                                  Delivered
+                                </p>
+                              </td>
+                            ) : (
+                              <td>
+                                <p className="bg-red-500 text-white inline md:p-2 p-1 rounded-md">
+                                  Not Delivered
+                                </p>
+                              </td>
+                            )}
 
-                          <td className="px-4">
-                            {moment(item.createdAt).format("LLL")}
-                          </td>
-                          {item.isDelivered ? (
-                            <td>
-                              <p className=" inline p-2 rounded-md">
-                                {moment(item.deliveredAt).format("LLL")}
-                              </p>
+                            <td className="px-4">
+                              {moment(item.createdAt).format("LLL")}
                             </td>
-                          ) : (
-                            <td>
-                              <p className="inline md:p-2 p-1 rounded-md">--</p>
-                            </td>
-                          )}
-                        </tr>
-                      );
-                    })}
-                  </tbody>
+                            {item.isDelivered ? (
+                              <td>
+                                <p className=" inline p-2 rounded-md">
+                                  {moment(item.deliveredAt).format("LLL")}
+                                </p>
+                              </td>
+                            ) : (
+                              <td>
+                                <p className="inline md:p-2 p-1 rounded-md">
+                                  --
+                                </p>
+                              </td>
+                            )}
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  )}
                 </table>
               </div>
             </div>

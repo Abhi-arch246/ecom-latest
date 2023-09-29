@@ -29,9 +29,12 @@ function Profile() {
   return (
     <div className="container mx-auto flex-col justify-center p-4">
       <div className="text-center my-6">
-        <Link className="p-3 mx-2 rounded-md bg-slate-400" to="/admin">
-          Switch to Admin
-        </Link>
+        {userInfo && userInfo.isAdmin && (
+          <Link className="p-3 mx-2 rounded-md bg-slate-400" to="/admin">
+            Switch to Admin
+          </Link>
+        )}
+
         <button
           onClick={logoutHandle}
           className="bg-red-500 p-2 rounded-md text-white"

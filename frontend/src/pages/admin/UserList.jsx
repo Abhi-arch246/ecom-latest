@@ -33,53 +33,57 @@ function UserList() {
                       <th className="text-md p-5">Updated time</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {isLoading && (
+
+                  {isLoading ? (
+                    <div className="w-screen mx-auto">
                       <img
-                        width="450px"
+                        className="mx-auto"
                         src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
                         alt="Loading ..."
                       />
-                    )}
-                    {allusers?.map((item) => {
-                      return (
-                        <tr
-                          className="border-b text-center bg-neutral-100"
-                          key={item._id}
-                        >
-                          <Link
-                            className="hover:underline"
-                            to={`/order/${item._id}`}
+                    </div>
+                  ) : (
+                    <tbody>
+                      {allusers?.map((item) => {
+                        return (
+                          <tr
+                            className="border-b text-center bg-neutral-100"
+                            key={item._id}
                           >
-                            <td className="py-6 font-bold">{item._id}</td>
-                          </Link>
+                            <Link
+                              className="hover:underline"
+                              to={`/order/${item._id}`}
+                            >
+                              <td className="py-6 font-bold">{item._id}</td>
+                            </Link>
 
-                          <td>{item.name}</td>
-                          <td>{item.email}</td>
-                          {item.isAdmin ? (
-                            <td>
-                              <p className="bg-green-500 inline p-2 rounded-md">
-                                Yes
-                              </p>
-                            </td>
-                          ) : (
-                            <td>
-                              <p className="bg-red-500 text-white inline md:p-2 p-1 rounded-md">
-                                No
-                              </p>
-                            </td>
-                          )}
+                            <td>{item.name}</td>
+                            <td>{item.email}</td>
+                            {item.isAdmin ? (
+                              <td>
+                                <p className="bg-green-500 inline p-2 rounded-md">
+                                  Yes
+                                </p>
+                              </td>
+                            ) : (
+                              <td>
+                                <p className="bg-red-500 text-white inline md:p-2 p-1 rounded-md">
+                                  No
+                                </p>
+                              </td>
+                            )}
 
-                          <td className="px-4">
-                            {moment(item.createdAt).format("LLL")}
-                          </td>
-                          <td className="px-4">
-                            {moment(item.updatedAt).format("LLL")}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
+                            <td className="px-4">
+                              {moment(item.createdAt).format("LLL")}
+                            </td>
+                            <td className="px-4">
+                              {moment(item.updatedAt).format("LLL")}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  )}
                 </table>
               </div>
             </div>

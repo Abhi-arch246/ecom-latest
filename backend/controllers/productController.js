@@ -31,7 +31,9 @@ const addProductReview = async (req, res) => {
     );
 
     if (alreadyReviewed) {
-      res.status(400).send("Product already reviewed");
+      return res
+        .status(400)
+        .send({ status: 0, msg: "Product already reviewed" });
     }
 
     const review = {
@@ -40,7 +42,6 @@ const addProductReview = async (req, res) => {
       rating: Number(rating),
       comment,
     };
-    console.log(review);
 
     product.reviews.push(review);
     product.rating =
@@ -48,9 +49,23 @@ const addProductReview = async (req, res) => {
       product.reviews.length;
 
     await product.save();
-    return res.status(201).send("Review added");
+    return res.status(200).send({ status: 1, msg: "Review added" });
   } else {
-    return res.status(400).send("Review not added, something went wrong");
+    return res
+      .status(400)
+      .send({ status: 0, msg: "Review not added, something went wrong" });
+  }
+};
+
+//endPoint : '/api/products/:id/reviews'
+const deleteProductReview = async (req, res) => {
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    await Product.deleteOne({ _id: req.params.id });
+    return res.status(200).json({ msg: "Product deleted!" });
+  } else {
+    return res.status(200).json({ msg: "Something went wrong!" });
   }
 };
 
@@ -122,6 +137,7 @@ module.exports = {
   getAllProducts,
   getProductById,
   addProductReview,
+  deleteProductReview,
   addProduct,
   updateProduct,
   deleteProduct,

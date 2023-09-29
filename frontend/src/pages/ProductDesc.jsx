@@ -2,6 +2,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   useGetProductByIdQuery,
   useCreateReviewMutation,
+  useDeleteReviewMutation,
 } from "../slices/productsApiSlice";
 import {
   FaCartShopping,
@@ -9,6 +10,7 @@ import {
   FaRegStar,
   FaCircleChevronLeft,
 } from "react-icons/fa6";
+import { MdDeleteOutline } from "react-icons/md";
 import Rating from "react-rating";
 import { useState } from "react";
 import { addToCart } from "../slices/cartSlice";
@@ -30,6 +32,8 @@ function ProductDesc() {
   } = useGetProductByIdQuery(productId);
   const [createReview, { isLoading: reviewLoading }] =
     useCreateReviewMutation(productId);
+  const [deleteReview, { isLoading: deleteLoading }] =
+    useDeleteReviewMutation(productId);
 
   const { userInfo } = useSelector((state) => state.auth);
   const addToCartHandler = async () => {
@@ -42,19 +46,27 @@ function ProductDesc() {
       toast.error("Oops that's not right");
     } else {
       try {
-        await createReview({
+        const res = await createReview({
           productId,
           rating,
           comment,
         }).unwrap();
         refetch();
-        toast.success("Review submitted");
-        setComment("");
-        setRating(0);
+        if (res.status) {
+          setComment("");
+          setRating(0);
+          toast.success(res.msg);
+        } else {
+          toast.error(res.msg);
+        }
       } catch (error) {
         toast.error(error.data);
       }
     }
+  };
+
+  const deleteReviewHandler = async (id, productId) => {
+    toast.success(`Review ${id} deleted ${productId}`);
   };
 
   return (
@@ -135,8 +147,7 @@ function ProductDesc() {
               <div className="text-right my-8">
                 <button
                   className="disabled:opacity-50 disabled:cursor-not-allowed bg-slate-600 p-2 md:text-right rounded-lg text-white"
-                  // className={`${product.countInStock > 0} ? "bg-slate-600 p-2 md:text-right rounded-lg text-white" : "bg-slate-600 p-2 md:text-right rounded-lg text-white"`}
-                  disabled={product.countInStock == 0}
+                  disabled={product.countInStock <= 0}
                   onClick={addToCartHandler}
                 >
                   <span className="px-2">
@@ -149,7 +160,7 @@ function ProductDesc() {
           </div>
           <div className="container p-3 md:flex justify-around">
             <div className="flex-col">
-              <h2 className="text-2xl font-bold">Reviews</h2>
+              <h2 className="text-2xl font-bold mb-6">Reviews</h2>
               {product.reviews.length === 0 && (
                 <p className="my-8 bg-red-200 p-3 rounded-md">
                   No reviews for this product
@@ -157,9 +168,14 @@ function ProductDesc() {
               )}
               {product.reviews.map((review) => {
                 return (
-                  <div key={review._id}>
+                  <div
+                    className="pb-2 border-b-2 border-slate-300"
+                    key={review._id}
+                  >
                     <p>{review.name}</p>
+
                     <Rating
+                      className="pr-6"
                       style={{ color: "orange" }}
                       initialRating={review.rating}
                       readonly
@@ -167,6 +183,17 @@ function ProductDesc() {
                       fullSymbol={<FaStar />}
                       emptySymbol={<FaRegStar />}
                     />
+
+                    {userInfo && userInfo.isAdmin && (
+                      <MdDeleteOutline
+                        onClick={() =>
+                          deleteReviewHandler(review._id, productId)
+                        }
+                        className="inline hover:cursor-pointer"
+                        size={25}
+                      />
+                    )}
+
                     <p>{review.comment}</p>
                     <p>{moment(review.createdAt).format("LLL")}</p>
                   </div>

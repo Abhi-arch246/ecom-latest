@@ -123,7 +123,7 @@ function OrderScreen() {
         <div className="text-center py-8">
           <button
             onClick={placeOrderHandler}
-            className="bg-slate-500 py-2 px-3 rounded-md"
+            className="bg-slate-500 text-white py-2 px-3 rounded-md"
           >
             Order now
           </button>

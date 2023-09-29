@@ -1,4 +1,5 @@
 const Order = require("../models/orderModel");
+const Product = require("../models/productModel");
 
 //endPoint : '/api/orders'
 const addOrder = async (req, res) => {
@@ -30,6 +31,13 @@ const addOrder = async (req, res) => {
       taxPrice,
       shippingPrice,
       totalPrice,
+    });
+
+    order.orderItems.map(async (x) => {
+      const pro = await Product.findById(x.product);
+      pro.countInStock -= x.qty;
+
+      pro.save();
     });
 
     const creatingOrder = await order.save();

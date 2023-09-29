@@ -14,8 +14,8 @@ function EditProduct() {
   const [imageUrl, setImageUrl] = useState("");
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
-  const [countInStock, setCountInStock] = useState("");
+  const [price, setPrice] = useState();
+  const [countInStock, setCountInStock] = useState();
   const {
     data: product,
     refetch,
@@ -148,7 +148,7 @@ function EditProduct() {
             <div className="grid md:grid-cols-2 md:gap-6">
               <div className="relative z-0 w-full mb-6 group">
                 <input
-                  type="text"
+                  type="number"
                   value={countInStock}
                   onChange={(e) => setCountInStock(e.target.value)}
                   className="block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -158,7 +158,7 @@ function EditProduct() {
               </div>
               <div className="relative z-0 w-full mb-6 group">
                 <input
-                  type="text"
+                  type="number"
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   className="block py-2.5 px-0 w-full text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-slate-600 peer"
