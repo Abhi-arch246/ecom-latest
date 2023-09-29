@@ -85,39 +85,45 @@ function OrderScreen() {
           )}
           <h1 className="text-3xl text-center font-bold">Order items</h1>
           <div>
-            <table className="m-4 w-auto mx-auto">
-              <thead>
-                <tr className="border-solid border-b-2">
-                  <th className="text-md p-6">Product Image</th>
-                  <th className="text-md p-6">Product Name</th>
-                  <th className="text-md p-6">Category</th>
-                  <th className="text-md p-6">Price</th>
-                  <th className="text-md p-6">Quantity</th>
-                  <th className="text-md p-6">Total Price</th>
-                </tr>
-              </thead>
-              <tbody className="text-center">
-                {cartItems.map((item) => {
-                  return (
-                    <tr key={item._id} className="">
-                      <td>
-                        <img
-                          className="mx-auto pt-4"
-                          src={item.imageUrl}
-                          alt={item.name}
-                          width="75px"
-                        />
-                      </td>
-                      <td>{item.name}</td>
-                      <td>{item.category}</td>
-                      <td>${item.price} /-</td>
-                      <td>{item.qty}</td>
-                      <td>${item.qty * item.price} /-</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+              <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+                <div className="overflow-hidden">
+                  <table className="m-4 w-auto mx-auto">
+                    <thead>
+                      <tr className="border-solid border-b-2">
+                        <th className="text-md p-6">Product Image</th>
+                        <th className="text-md p-6">Product Name</th>
+                        <th className="text-md p-6">Category</th>
+                        <th className="text-md p-6">Price</th>
+                        <th className="text-md p-6">Quantity</th>
+                        <th className="text-md p-6">Total Price</th>
+                      </tr>
+                    </thead>
+                    <tbody className="text-center">
+                      {cartItems.map((item) => {
+                        return (
+                          <tr key={item._id} className="">
+                            <td>
+                              <img
+                                className="mx-auto pt-4"
+                                src={item.imageUrl}
+                                alt={item.name}
+                                width="75px"
+                              />
+                            </td>
+                            <td>{item.name}</td>
+                            <td>{item.category}</td>
+                            <td>${item.price} /-</td>
+                            <td>{item.qty}</td>
+                            <td>${item.qty * item.price} /-</td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="text-center py-8">
