@@ -2,7 +2,6 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   useGetProductByIdQuery,
   useCreateReviewMutation,
-  useDeleteReviewMutation,
 } from "../slices/productsApiSlice";
 import {
   FaCartShopping,
@@ -32,8 +31,6 @@ function ProductDesc() {
   } = useGetProductByIdQuery(productId);
   const [createReview, { isLoading: reviewLoading }] =
     useCreateReviewMutation(productId);
-  const [deleteReview, { isLoading: deleteLoading }] =
-    useDeleteReviewMutation(productId);
 
   const { userInfo } = useSelector((state) => state.auth);
   const addToCartHandler = async () => {
@@ -63,10 +60,6 @@ function ProductDesc() {
         toast.error(error.data);
       }
     }
-  };
-
-  const deleteReviewHandler = async (id, productId) => {
-    toast.success(`Review ${id} deleted ${productId}`);
   };
 
   return (
@@ -159,7 +152,7 @@ function ProductDesc() {
             </div>
           </div>
           <div className="container p-3 md:flex justify-around">
-            <div className="flex-col">
+            <div className="flex-col pt-6">
               <h2 className="text-2xl font-bold mb-6">Reviews</h2>
               {product.reviews.length === 0 && (
                 <p className="my-8 bg-red-200 p-3 rounded-md">
@@ -172,7 +165,7 @@ function ProductDesc() {
                     className="pb-2 border-b-2 border-slate-300"
                     key={review._id}
                   >
-                    <p>{review.name}</p>
+                    <p className="font-bold">{review.name}</p>
 
                     <Rating
                       className="pr-6"
@@ -184,23 +177,13 @@ function ProductDesc() {
                       emptySymbol={<FaRegStar />}
                     />
 
-                    {userInfo && userInfo.isAdmin && (
-                      <MdDeleteOutline
-                        onClick={() =>
-                          deleteReviewHandler(review._id, productId)
-                        }
-                        className="inline hover:cursor-pointer"
-                        size={25}
-                      />
-                    )}
-
                     <p>{review.comment}</p>
                     <p>{moment(review.createdAt).format("LLL")}</p>
                   </div>
                 );
               })}
             </div>
-            <div className="flex-col">
+            <div className="flex-col pt-6">
               <h2 className="text-2xl font-bold">Write customer review</h2>
               {reviewLoading && (
                 <img

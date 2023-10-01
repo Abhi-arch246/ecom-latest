@@ -53,28 +53,28 @@ function OrderScreen() {
   return (
     <>
       <div className="container mx-auto my-8 px-3">
-        <div className="md:flex gap-3">
-          <div className="w-1/2">
+        <div className="md:flex justify-evenly mx-auto py-8">
+          <div className="md:w-1/2">
+            <h1 className="text-2xl font-bold">Order Summary</h1>
+            <div className="pt-6">
+              <p className="py-3">Items Price: ${itemsPrice} /-</p>
+              <p className="py-2">Shipping Price: ${shippingPrice} /-</p>
+              <p className="py-2">Tax Price: ${taxPrice} /-</p>
+              <hr className="w-1/2" />
+              <h2 className="font-bold py-3">Total price: ${totalPrice} /-</h2>
+            </div>
+          </div>
+          <div className="md:w-1/2 pt-12">
             <h1 className="text-2xl font-bold">Shipping Details</h1>
-            <div className="p-3">
+            <div className="pt-6">
               <h2 className="font-bold py-3">Address:</h2>
               <p>
                 {address}, {city}, {state}, {country} - {postalCode}
               </p>
             </div>
           </div>
-          <div className="w-1/2">
-            <h1 className="text-2xl font-bold">Order Summary</h1>
-            <div className="p-3 float-right">
-              <p className="py-2">Items Price: ${itemsPrice} /-</p>
-              <p className="py-2">Shipping Price: ${shippingPrice} /-</p>
-              <p className="py-2">Tax Price: ${taxPrice} /-</p>
-              <hr />
-              <h2 className="font-bold py-3">Total price: ${totalPrice} /-</h2>
-            </div>
-          </div>
         </div>
-        <div className="my-4">
+        <div className="my-8">
           {isLoading && (
             <img
               className="mx-auto"
@@ -126,7 +126,7 @@ function OrderScreen() {
             </div>
           </div>
         </div>
-        <div className="text-center py-8">
+        <div className="text-center py-4">
           <button
             onClick={placeOrderHandler}
             className="bg-slate-500 text-white py-2 px-3 rounded-md"
