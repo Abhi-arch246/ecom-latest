@@ -5,6 +5,8 @@ const Product = require("../models/productModel");
 const addOrder = async (req, res) => {
   const {
     userId,
+    userName,
+    userEmail,
     orderItems,
     shippingAddress,
     paymentMethod,
@@ -25,6 +27,8 @@ const addOrder = async (req, res) => {
         _id: undefined,
       })),
       userId,
+      userName,
+      userEmail,
       orderAmount,
       shippingAddress,
       paymentMethod,

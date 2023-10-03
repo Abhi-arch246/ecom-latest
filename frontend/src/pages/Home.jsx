@@ -1,8 +1,10 @@
 import { useGetProductsQuery } from "../slices/productsApiSlice";
 import hero_img from "../assets/hero_img.png";
 import Product from "../components/Product";
+import { useState } from "react";
 
 function Home() {
+  const [search, setSearch] = useState("");
   const { data: products, isLoading, error } = useGetProductsQuery();
   return (
     <>
@@ -34,7 +36,16 @@ function Home() {
 
         {/* Products section */}
         <div className="container py-6">
-          <h2 className="text-3xl font-bold py-6">Latest Products</h2>
+          <div className="md:flex justify-between py-8">
+            <h2 className="text-3xl font-bold">Latest Products</h2>
+            <input
+              className="rounded-md m-2 p-2 invalid:border-red-400 border border-gray-300"
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search product"
+            />
+          </div>
           {isLoading ? (
             <img
               className="mx-auto"
@@ -47,9 +58,16 @@ function Home() {
           ) : (
             <>
               <div className="grid grid-flow-row grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-6">
-                {products.map((product) => (
-                  <Product key={product._id} product={product} />
-                ))}
+                {products
+                  .filter((product) => {
+                    return search.toLowerCase() === ""
+                      ? product
+                      : product.name.toLowerCase().includes(search) ||
+                          product.category.toLowerCase().includes(search);
+                  })
+                  .map((product) => (
+                    <Product key={product._id} product={product} />
+                  ))}
               </div>
             </>
           )}

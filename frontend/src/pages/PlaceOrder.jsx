@@ -31,6 +31,8 @@ function OrderScreen() {
     try {
       const res = await createOrder({
         userId: userInfo._id,
+        userName: userInfo.name,
+        userEmail: userInfo.email,
         orderItems: cartItems,
         shippingAddress,
         paymentMethod,

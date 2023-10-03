@@ -213,9 +213,21 @@ function OrderPage() {
 
             {!order.isPaid && (
               <>
-                {payLoading && <h1 className="text-center">Loading...</h1>}
+                {payLoading && (
+                  <img
+                    className="mx-auto"
+                    width="450px"
+                    src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
+                    alt="Loading ..."
+                  />
+                )}
                 {isPending ? (
-                  <h1 className="text-center">Loading...</h1>
+                  <img
+                    className="mx-auto"
+                    width="450px"
+                    src="https://i.pinimg.com/originals/59/22/20/5922208e18658f5e83b6ad801b895f71.gif"
+                    alt="Loading ..."
+                  />
                 ) : (
                   <div className="w-1/2 md:w-1/3 mx-auto my-12">
                     <PayPalButtons

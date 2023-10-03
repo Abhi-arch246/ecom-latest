@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { useAllUsersQuery } from "../../slices/usersApiSlice";
 import { FaCircleChevronLeft } from "react-icons/fa6";
 import moment from "moment";
+import { useState } from "react";
 
 function UserList() {
+  const [search, setSearch] = useState("");
   const { data: allusers, isLoading, error } = useAllUsersQuery();
 
   return (
@@ -19,6 +21,15 @@ function UserList() {
       <div className="container mx-auto">
         <div className="flex flex-col">
           <h1 className="text-3xl py-4 font-bold text-center">All Users</h1>
+          <div className="flex justify-end">
+            <input
+              className="rounded-md p-2 invalid:border-red-400 border border-gray-300"
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search users"
+            />
+          </div>
           <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
               <div className="overflow-hidden">
@@ -44,44 +55,51 @@ function UserList() {
                     </div>
                   ) : (
                     <tbody>
-                      {allusers?.map((item) => {
-                        return (
-                          <tr
-                            className="border-b text-center bg-neutral-100"
-                            key={item._id}
-                          >
-                            <Link
-                              className="hover:underline"
-                              to={`/order/${item._id}`}
+                      {allusers
+                        ?.filter((item) => {
+                          return search.toLowerCase() === ""
+                            ? item
+                            : item.name.toLowerCase().includes(search) ||
+                                item.email.toLowerCase().includes(search);
+                        })
+                        .map((item) => {
+                          return (
+                            <tr
+                              className="border-b text-center bg-neutral-100"
+                              key={item._id}
                             >
-                              <td className="py-6 font-bold">{item._id}</td>
-                            </Link>
+                              <Link
+                                className="hover:underline"
+                                to={`/order/${item._id}`}
+                              >
+                                <td className="py-6 font-bold">{item._id}</td>
+                              </Link>
 
-                            <td>{item.name}</td>
-                            <td>{item.email}</td>
-                            {item.isAdmin ? (
-                              <td>
-                                <p className="bg-green-500 inline p-2 rounded-md">
-                                  Yes
-                                </p>
-                              </td>
-                            ) : (
-                              <td>
-                                <p className="bg-red-500 text-white inline md:p-2 p-1 rounded-md">
-                                  No
-                                </p>
-                              </td>
-                            )}
+                              <td>{item.name}</td>
+                              <td>{item.email}</td>
+                              {item.isAdmin ? (
+                                <td>
+                                  <p className="bg-green-500 inline p-2 rounded-md">
+                                    Yes
+                                  </p>
+                                </td>
+                              ) : (
+                                <td>
+                                  <p className="bg-red-500 text-white inline md:p-2 p-1 rounded-md">
+                                    No
+                                  </p>
+                                </td>
+                              )}
 
-                            <td className="px-4">
-                              {moment(item.createdAt).format("LLL")}
-                            </td>
-                            <td className="px-4">
-                              {moment(item.updatedAt).format("LLL")}
-                            </td>
-                          </tr>
-                        );
-                      })}
+                              <td className="px-4">
+                                {moment(item.createdAt).format("LLL")}
+                              </td>
+                              <td className="px-4">
+                                {moment(item.updatedAt).format("LLL")}
+                              </td>
+                            </tr>
+                          );
+                        })}
                     </tbody>
                   )}
                 </table>
